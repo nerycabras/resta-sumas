@@ -1,0 +1,51 @@
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 20;
+}
+.modal {
+  background: #fff;
+  border-radius: 22px;
+  padding: 22px;
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  animation: pop 0.3s ease-out;
+}
+.title {
+  font: 700 17px var(--f-display);
+  color: var(--c-ink);
+}
+.sub {
+  font: 600 13px var(--f-body);
+  color: rgba(0, 0, 0, 0.6);
+}
+.input {
+  font: 800 20px var(--f-display);
+  text-align: center;
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  background: var(--c-surface);
+  color: var(--c-ink);
+}
+.input:focus {
+  outline: none;
+  border-color: var(--c-teal);
+}
+.error {
+  font: 700 12px var(--f-body);
+  color: var(--c-red);
+}
+.actions {
+  display: flex;
+  gap: 8px;
+}

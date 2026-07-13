@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # test / coverage
 coverage
+
+# claude code (ajustes locales de la máquina)
+.claude/settings.local.json

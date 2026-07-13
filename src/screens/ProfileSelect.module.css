@@ -1,0 +1,150 @@
+.wrap {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 18px;
+  overflow-y: auto;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.title {
+  font: 700 20px var(--f-display);
+  color: var(--c-ink);
+}
+.link {
+  font: 700 13px var(--f-body);
+  color: var(--c-coral);
+}
+
+.loading,
+.error {
+  font: 700 13px var(--f-body);
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  padding: 20px;
+}
+.error {
+  color: var(--c-red);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.avatarBtn,
+.addCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px 12px;
+  box-shadow: var(--shadow-card);
+  width: 100%;
+}
+.addCard {
+  border: 3px dashed rgba(0, 0, 0, 0.12);
+  background: transparent;
+  color: rgba(0, 0, 0, 0.45);
+  justify-content: center;
+  min-height: 128px;
+}
+.plus {
+  font: 700 40px var(--f-display);
+  line-height: 1;
+}
+.name {
+  font: 700 15px var(--f-display);
+  color: var(--c-ink);
+}
+
+.cardManage {
+  display: flex;
+  gap: 6px;
+}
+.chip,
+.chipDanger {
+  flex: 1;
+  font: 700 12px var(--f-body);
+  padding: 8px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--c-ink);
+}
+.chipDanger {
+  background: color-mix(in oklch, var(--c-red) 14%, transparent);
+  color: var(--c-red);
+}
+
+.manageBtn {
+  margin-top: auto;
+  padding-top: 18px;
+  font: 700 13px var(--f-body);
+  color: rgba(0, 0, 0, 0.5);
+  align-self: center;
+}
+
+/* Modal de alta/edición */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 20;
+}
+.modal {
+  background: #fff;
+  border-radius: 22px;
+  padding: 22px;
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  animation: pop 0.3s ease-out;
+}
+.modalTitle {
+  font: 700 17px var(--f-display);
+  color: var(--c-ink);
+}
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font: 700 12px var(--f-body);
+  color: var(--c-ink);
+}
+.input {
+  font: 600 15px var(--f-body);
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  background: var(--c-surface);
+  color: var(--c-ink);
+  min-height: var(--tap);
+}
+.input:focus {
+  outline: none;
+  border-color: var(--c-teal);
+}
+.actions {
+  display: flex;
+  gap: 8px;
+}

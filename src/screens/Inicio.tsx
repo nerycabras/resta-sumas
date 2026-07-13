@@ -1,7 +1,9 @@
 // Pantalla de inicio: mapa de bloques, vidas, gemas y mascota.
 // F0 muestra el Bloque 2 (suma) jugable; los demás son de contexto visual.
 
+import { useNavigate } from 'react-router-dom';
 import { useGame } from '../store/gameStore.ts';
+import { useChild } from '../store/childStore.ts';
 import { Fox } from '../components/Fox.tsx';
 import { Hearts } from '../components/Hearts.tsx';
 import { GemCounter } from '../components/GemCounter.tsx';
@@ -9,19 +11,30 @@ import ui from './ui.module.css';
 import styles from './Inicio.module.css';
 
 export function Inicio() {
+  const navigate = useNavigate();
   const gems = useGame((s) => s.gems);
   const goExplicacion = useGame((s) => s.goExplicacion);
+  const name = useChild((s) => s.child?.name ?? '');
 
   return (
     <div className={ui.screen}>
       <div className={ui.topbar}>
-        <Hearts lives={3} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <button
+            className={ui.backBtn}
+            onClick={() => navigate('/')}
+            aria-label="Cambiar de perfil"
+          >
+            ‹
+          </button>
+          <Hearts lives={3} />
+        </div>
         <GemCounter gems={gems} />
       </div>
 
       <div className={styles.mascot}>
         <Fox size={76} mood="happy" bob />
-        <div className={ui.bubble}>¡Hola! Elige un bloque 🦊</div>
+        <div className={ui.bubble}>¡Hola, {name || 'peque'}! Elige un bloque 🦊</div>
       </div>
 
       <div className={styles.blocks}>

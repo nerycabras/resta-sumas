@@ -1,46 +1,15 @@
-// Estado de la sesión de juego (Zustand).
-// El progreso persistente (gemas) va a localStorage vía `persist`; en F1 esta
-// misma capa se conectará a Supabase/Dexie sin tocar la UI.
+// Estado de la sesión de juego (Zustand). Puro y síncrono (testeable): no habla
+// con la red. La fuente de verdad de las gemas es la nube; el hook useCloudSync
+// hidrata el store al entrar y persiste al terminar un set. La caché offline
+// por-niño llega en F1 Paso 2.
 //
-// F0: solo suma de 2 cifras con acarreo (Bloque 2). El niño teclea unidades,
-// la llevada y decenas; la llevada es entrada obligatoria y se valida (RF-13).
+// F1 Paso 1: solo suma de 2 cifras con acarreo (Bloque 2). El niño teclea
+// unidades, la llevada y decenas; la llevada es obligatoria y se valida (RF-13).
 
 import { create } from 'zustand';
-import { persist, type PersistStorage } from 'zustand/middleware';
 import { generateExercises } from '../engine/generator.ts';
 import { checkAnswer } from '../engine/validator.ts';
 import type { Exercise } from '../engine/types.ts';
-
-/** Solo persistimos el progreso. */
-type Persisted = Pick<GameState, 'gems'>;
-
-// Storage tolerante: resuelve localStorage en cada llamada, así que si no está
-// disponible (tests en node, SSR, modo privado…) la persistencia no actúa en
-// vez de romper. Evita el problema de "storage capturado una sola vez".
-const safeStorage: PersistStorage<Persisted> = {
-  getItem: (name) => {
-    try {
-      const raw = globalThis.localStorage?.getItem(name);
-      return raw ? JSON.parse(raw) : null;
-    } catch {
-      return null;
-    }
-  },
-  setItem: (name, value) => {
-    try {
-      globalThis.localStorage?.setItem(name, JSON.stringify(value));
-    } catch {
-      /* sin persistencia disponible */
-    }
-  },
-  removeItem: (name) => {
-    try {
-      globalThis.localStorage?.removeItem(name);
-    } catch {
-      /* sin persistencia disponible */
-    }
-  },
-};
 
 export const SET_SIZE = 5;
 export const START_LIVES = 3;
@@ -60,6 +29,15 @@ export type Cell = 'units' | 'carry' | 'tens';
 
 export type Feedback = 'correct' | 'wrong' | null;
 
+/** Un intento registrado para guardarlo en la nube (§8 attempt). */
+export interface AttemptLog {
+  exercise: Exercise;
+  given: { digits: (number | null)[]; carries: (number | null)[] };
+  isCorrect: boolean;
+  errorType: string;
+  msTaken: number;
+}
+
 interface SessionInput {
   units: number | null;
   carry: number | null;
@@ -70,7 +48,8 @@ interface SessionInput {
 }
 
 interface GameState extends SessionInput {
-  // ---- Progreso persistente ----
+  // ---- Niño y progreso ----
+  childId: string | null;
   gems: number;
 
   // ---- Sesión (efímera) ----
@@ -80,8 +59,11 @@ interface GameState extends SessionInput {
   idx: number;
   correctCount: number;
   gemsEarned: number;
+  attemptsLog: AttemptLog[];
+  exerciseShownAt: number;
 
   // ---- Navegación ----
+  hydrate: (input: { childId: string; gems: number }) => void;
   goInicio: () => void;
   goExplicacion: () => void;
   startPractice: () => void;
@@ -119,13 +101,14 @@ const freshSession = () => ({
   idx: 0,
   correctCount: 0,
   gemsEarned: 0,
+  attemptsLog: [] as AttemptLog[],
+  exerciseShownAt: Date.now(),
   ...clearedInput(),
 });
 
-export const useGame = create<GameState>()(
-  persist(
-    (set, get) => ({
-      gems: 24,
+export const useGame = create<GameState>()((set, get) => ({
+  childId: null,
+  gems: 0,
 
       screen: 'inicio',
       lives: START_LIVES,
@@ -133,8 +116,11 @@ export const useGame = create<GameState>()(
       idx: 0,
       correctCount: 0,
       gemsEarned: 0,
+      attemptsLog: [],
+      exerciseShownAt: 0,
       ...clearedInput(),
 
+      hydrate: ({ childId, gems }) => set({ childId, gems }),
       goInicio: () => set({ screen: 'inicio' }),
       goExplicacion: () => set({ screen: 'explicacion' }),
 
@@ -175,13 +161,21 @@ export const useGame = create<GameState>()(
         if (s.units === null || s.carry === null || s.tens === null) return;
 
         const ex = s.exercises[s.idx];
-        const result = checkAnswer(ex, {
-          digits: [s.units, s.tens],
-          carries: [0, s.carry],
-        });
+        const given = { digits: [s.units, s.tens], carries: [0, s.carry] };
+        const result = checkAnswer(ex, given);
+
+        const attempt: AttemptLog = {
+          exercise: ex,
+          given,
+          isCorrect: result.correct,
+          errorType: result.errorType,
+          msTaken: Math.max(0, Date.now() - s.exerciseShownAt),
+        };
+        const attemptsLog = [...s.attemptsLog, attempt];
 
         if (result.correct) {
           set({
+            attemptsLog,
             feedback: 'correct',
             gems: s.gems + GEMS_PER_CORRECT,
             gemsEarned: s.gemsEarned + GEMS_PER_CORRECT,
@@ -193,27 +187,19 @@ export const useGame = create<GameState>()(
             if (next >= st.exercises.length) {
               set({ screen: 'resultado' });
             } else {
-              set({ idx: next, ...clearedInput() });
+              set({ idx: next, exerciseShownAt: Date.now(), ...clearedInput() });
             }
           }, FEEDBACK_MS_OK);
         } else {
           const newLives = s.lives - 1;
-          set({ feedback: 'wrong', lives: newLives, shake: true });
+          set({ attemptsLog, feedback: 'wrong', lives: newLives, shake: true });
           setTimeout(() => {
             if (get().lives <= 0) {
               set({ screen: 'gameover', shake: false });
             } else {
-              set({ ...clearedInput() });
+              set({ exerciseShownAt: Date.now(), ...clearedInput() });
             }
           }, FEEDBACK_MS_WRONG);
         }
       },
-    }),
-    {
-      name: 'zorro-progreso',
-      storage: safeStorage,
-      // Solo el progreso persiste; el estado de la sesión es efímero.
-      partialize: (s): Persisted => ({ gems: s.gems }),
-    },
-  ),
-);
+}));
