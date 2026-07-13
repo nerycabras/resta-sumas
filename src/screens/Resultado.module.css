@@ -1,0 +1,57 @@
+.win {
+  align-items: center;
+  background: linear-gradient(180deg, var(--c-teal) 0%, var(--c-surface) 55%);
+}
+
+.fox {
+  margin-top: 56px;
+  animation: pop 0.5s ease-out;
+}
+
+.title {
+  margin-top: 14px;
+  font: 800 24px var(--f-display);
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+.sub {
+  margin-top: 4px;
+  font: 700 13px var(--f-body);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.gemCard {
+  margin-top: 24px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 18px 26px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  animation: pop 0.5s ease-out 0.15s both;
+}
+.gem {
+  width: 26px;
+  height: 26px;
+  background: var(--c-gold);
+  transform: rotate(45deg);
+  border-radius: 5px;
+}
+.gemText {
+  font: 800 26px var(--f-display);
+  color: var(--c-ink);
+}
+
+.hearts {
+  margin-top: 18px;
+}
+
+.actions {
+  margin-top: auto;
+  width: 100%;
+  padding: 20px 26px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

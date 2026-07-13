@@ -1,0 +1,28 @@
+.over {
+  align-items: center;
+  background: linear-gradient(180deg, var(--c-red) 0%, var(--c-surface) 55%);
+}
+
+.fox {
+  margin-top: 60px;
+}
+
+.title {
+  margin-top: 16px;
+  font: 800 22px var(--f-display);
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+.msg {
+  margin-top: 6px;
+  font: 700 13px var(--f-body);
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  padding: 0 40px;
+}
+
+.actions {
+  margin-top: auto;
+  width: 100%;
+  padding: 20px 26px 28px;
+}

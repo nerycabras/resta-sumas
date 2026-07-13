@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="oklch(96% 0.03 85)"/>
+  <!-- orejas -->
+  <path d="M16 12 L24 30 L10 26 Z" fill="oklch(68% 0.19 35)"/>
+  <path d="M48 12 L40 30 L54 26 Z" fill="oklch(68% 0.19 35)"/>
+  <!-- cara -->
+  <circle cx="32" cy="34" r="20" fill="oklch(68% 0.19 35)"/>
+  <!-- hocico -->
+  <path d="M22 40 q10 12 20 0 q-10 6 -20 0 Z" fill="#fff"/>
+  <ellipse cx="32" cy="42" rx="11" ry="8" fill="#fff"/>
+  <!-- ojos -->
+  <circle cx="25" cy="34" r="3" fill="#2b2b2b"/>
+  <circle cx="39" cy="34" r="3" fill="#2b2b2b"/>
+  <!-- nariz -->
+  <ellipse cx="32" cy="41" rx="3.5" ry="2.5" fill="#2b2b2b"/>
+</svg>

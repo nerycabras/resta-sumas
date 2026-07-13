@@ -1,0 +1,33 @@
+/* Marco de la app: pantalla completa en móvil, "teléfono" centrado en pantallas
+   grandes. Sustituye el 360×700 fijo del prototipo por unidades fluidas (RNF-01). */
+
+.stage {
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.frame {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  background: var(--c-surface);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* En pantallas grandes, mostramos el marco tipo teléfono. */
+@media (min-width: 480px) {
+  .stage {
+    padding: 24px;
+  }
+  .frame {
+    width: min(420px, 100%);
+    height: min(760px, calc(100dvh - 48px));
+    border-radius: 36px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  }
+}

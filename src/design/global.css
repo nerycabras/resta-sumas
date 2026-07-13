@@ -1,0 +1,127 @@
+/* Sistema de diseño global — tokens OKLCH + reset + animaciones.
+   Migra el estilo del prototipo a variables reutilizables y layout fluido
+   (RNF-01: fuera el 360×700 fijo). */
+
+:root {
+  /* Paleta OKLCH */
+  --c-coral: oklch(68% 0.19 35);
+  --c-coral-shadow: oklch(68% 0.19 35 / 0.3);
+  --c-gold: oklch(80% 0.15 85);
+  --c-gold-shadow: oklch(80% 0.15 85 / 0.4);
+  --c-teal: oklch(70% 0.13 190);
+  --c-teal-shadow: oklch(70% 0.13 190 / 0.4);
+  --c-red: oklch(62% 0.2 25);
+  --c-green: oklch(55% 0.15 145);
+  --c-ink: oklch(30% 0.02 60);
+  --c-surface: oklch(96% 0.03 85);
+  --c-page: oklch(93% 0.02 85);
+  --c-white: #fff;
+
+  /* Tipografías */
+  --f-display: 'Fredoka', system-ui, sans-serif;
+  --f-body: 'Nunito', system-ui, sans-serif;
+
+  /* Radios y sombras */
+  --r-card: 20px;
+  --r-btn: 18px;
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+  /* Objetivo táctil mínimo infantil (RNF-03) */
+  --tap: 44px;
+
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--c-page);
+  font-family: var(--f-body);
+  color: var(--c-ink);
+  /* Evita el rebote/zoom accidental en móvil durante el juego */
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+#root {
+  min-height: 100%;
+  min-height: 100dvh;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Animaciones del prototipo */
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+@keyframes pop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-8px);
+  }
+  40% {
+    transform: translateX(8px);
+  }
+  60% {
+    transform: translateX(-6px);
+  }
+  80% {
+    transform: translateX(6px);
+  }
+}
+@keyframes heartpop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

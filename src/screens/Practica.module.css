@@ -1,0 +1,110 @@
+.counter {
+  font: 700 12px var(--f-body);
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.progress {
+  height: 6px;
+  margin: 4px 18px 0;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+.progress span {
+  display: block;
+  height: 100%;
+  background: var(--c-teal);
+  transition: width 0.3s ease;
+}
+
+.stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  min-height: 0;
+}
+
+.operation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font: 800 34px var(--f-display);
+  color: var(--c-ink);
+}
+
+.carryRow {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  width: 100%;
+}
+.carrySlot {
+  width: 40px;
+}
+.operand {
+  line-height: 1.1;
+}
+
+.rule {
+  width: 100%;
+  height: 3px;
+  background: var(--c-ink);
+  margin: 4px 0;
+}
+
+.answerRow {
+  display: flex;
+  gap: 8px;
+}
+
+.answerCell,
+.carryCell {
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(0, 0, 0, 0.25);
+  font-family: var(--f-display);
+  font-weight: 800;
+}
+
+.answerCell {
+  width: 40px;
+  height: 48px;
+  border-radius: 10px;
+  border: 2.5px solid rgba(0, 0, 0, 0.15);
+  font-size: 26px;
+}
+
+.carryCell {
+  width: 36px;
+  height: 26px;
+  border-radius: 6px;
+  border: 2px dashed rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  color: var(--c-teal);
+}
+
+.cellActive {
+  border-color: var(--c-teal);
+  border-style: solid;
+}
+.cellFilled {
+  border-color: var(--c-coral);
+  border-style: solid;
+  color: var(--c-coral);
+}
+.cellWrong {
+  border-color: var(--c-red);
+  border-style: solid;
+  color: var(--c-red);
+}
+
+.feedback {
+  font: 800 15px var(--f-display);
+  min-height: 20px;
+  animation: pop 0.3s ease-out;
+}

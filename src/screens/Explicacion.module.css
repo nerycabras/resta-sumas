@@ -1,0 +1,133 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 18px 10px;
+}
+.headerTitle {
+  font: 700 15px var(--f-display);
+  color: var(--c-ink);
+}
+
+.body {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding-bottom: 8px;
+}
+
+.talk {
+  padding: 12px 20px 6px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.speech {
+  background: var(--c-surface);
+  border-radius: 14px 14px 14px 4px;
+  padding: 10px 14px;
+  font: 700 12.5px/1.4 var(--f-body);
+  color: var(--c-ink);
+}
+
+.concrete {
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.op {
+  font: 800 15px var(--f-display);
+  color: var(--c-ink);
+}
+.blocksRow {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.cube {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  display: inline-block;
+}
+.grid8 {
+  display: grid;
+  grid-template-columns: repeat(5, 16px);
+  grid-template-rows: repeat(2, 16px);
+  gap: 3px;
+}
+.row5 {
+  display: flex;
+  gap: 3px;
+}
+.plus {
+  font: 800 16px var(--f-display);
+  color: rgba(0, 0, 0, 0.4);
+}
+.caption {
+  font: 700 11px var(--f-body);
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+.arrow {
+  font: 800 20px var(--f-display);
+  color: var(--c-ink);
+}
+.tenBar {
+  width: 80px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--c-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 800 13px var(--f-display);
+  color: var(--c-ink);
+  box-shadow: 0 3px 8px var(--c-gold-shadow);
+}
+.result {
+  font: 800 22px var(--f-display);
+  color: var(--c-coral);
+}
+
+.abstract {
+  padding: 14px 20px;
+  border-top: 2px dashed rgba(0, 0, 0, 0.08);
+}
+.abstractTitle {
+  font: 700 13px var(--f-display);
+  color: var(--c-ink);
+  margin-bottom: 8px;
+  text-align: center;
+}
+.vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.15;
+  font: 800 22px var(--f-display);
+  color: var(--c-ink);
+  width: fit-content;
+  margin: 0 auto;
+}
+.carryMark {
+  font: 800 13px var(--f-display);
+  color: var(--c-teal);
+  align-self: flex-start;
+  padding-left: 2px;
+}
+.rule {
+  width: 100%;
+  height: 2px;
+  background: var(--c-ink);
+  margin: 2px 0;
+}
+.answer {
+  color: var(--c-coral);
+}
+
+.footer {
+  padding: 12px 18px 18px;
+}
